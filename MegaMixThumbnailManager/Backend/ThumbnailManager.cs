@@ -147,6 +147,11 @@ namespace MegaMixThumbnailManager.Backend
 
             foreach (Sprite sprite in sprites)
             {
+                //Sprite does really exist in pvIDs
+                if (!pvIDs.ContainsKey(sprite.Name))
+                {
+                    continue;
+                }
                 // Drop the PV ID eagerly to avoid overwriting thumbnails of songs with missing thumbnails.
                 pvIDs.Remove(sprite.Name);
 
