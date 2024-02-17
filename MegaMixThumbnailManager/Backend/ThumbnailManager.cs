@@ -148,7 +148,7 @@ namespace MegaMixThumbnailManager.Backend
             foreach (Sprite sprite in sprites)
             {
                 //Sprite does really exist in pvIDs
-                if (!pvIDs.ContainsKey(sprite.Name))
+                if (!pvIDs.Contains(sprite.Name))
                 {
                     continue;
                 }
