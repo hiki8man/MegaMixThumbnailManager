@@ -366,8 +366,8 @@ namespace MegaMixThumbnailManager.Backend
             {
                 SpriteTextureInfo textureInfo = new SpriteTextureInfo
                 {
+                    Id = MurmurHash.Calculate($"SPRTEX_SEL_PVTMB_{texture.Name}"),
                     Name = $"SPRTEX_SEL_PVTMB_{texture.Name}",
-                    Id = MurmurHash.Calculate(Name),
                     Index = textureIndex++
                 };
                 spriteSetInfo.Textures.Add(textureInfo);
@@ -379,8 +379,8 @@ namespace MegaMixThumbnailManager.Backend
             {
                 SpriteInfo spriteInfo = new SpriteInfo
                 {
+                    Id = MurmurHash.Calculate($"{SPRITE_DATABASE_NAME}_{sprite.Name}"),
                     Name = $"{SPRITE_DATABASE_NAME}_{sprite.Name}",
-                    Id = MurmurHash.Calculate(Name),
                     Index = spriteIndex++
                 };
                 spriteSetInfo.Sprites.Add(spriteInfo);
