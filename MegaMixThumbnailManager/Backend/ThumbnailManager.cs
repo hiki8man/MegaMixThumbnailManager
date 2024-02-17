@@ -147,14 +147,6 @@ namespace MegaMixThumbnailManager.Backend
 
             foreach (Sprite sprite in sprites)
             {
-                //Sprite does really exist in pvIDs
-                if (!pvIDs.Contains(sprite.Name))
-                {
-                    continue;
-                }
-                // Drop the PV ID eagerly to avoid overwriting thumbnails of songs with missing thumbnails.
-                pvIDs.Remove(sprite.Name);
-
                 if (sprite.TextureIndex != textureIndex)
                 {
                     // Sprite doesn't use this texture.
@@ -166,11 +158,14 @@ namespace MegaMixThumbnailManager.Backend
                     // We've already dealt with this ID, just skip it.
                     continue;
                 }
-
-                sprite.TextureIndex = globalTextureIndex;
-                globalSprites.Add(sprite);
-
-                modified = true;
+                //idk why it's work
+                //Drop ID and check if ID is exits in pvIDs
+                if (pvIDs.Remove(sprite.Name))
+                {
+                    sprite.TextureIndex = globalTextureIndex;
+                    globalSprites.Add(sprite);
+                    modified = true;
+                }
             }
 
             return modified;
