@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using MikuMikuLibrary.Archives;
 using MikuMikuLibrary.Archives.CriMw;
 using MikuMikuLibrary.Databases;
+using MikuMikuLibrary.Hashes;
 using MikuMikuLibrary.IO;
 using MikuMikuLibrary.Sprites;
 using MikuMikuLibrary.Textures;
+
 
 namespace MegaMixThumbnailManager.Backend
 {
@@ -21,9 +23,11 @@ namespace MegaMixThumbnailManager.Backend
         private static readonly string PV_DB_NAME = "pv_db.txt";
         private static readonly uint SPRITE_DATABASE_ID = 4527;
         private static readonly string SPRITE_DATABASE_NAME = "SPR_SEL_PVTMB";
+        /*No Need anymore
         private static readonly uint DATABASE_ID_OFFSET = 58027;
         private static readonly uint DATABASE_ID_MAX_SAFE_OFFSET = 58281;
         private static readonly uint DATABASE_ID_LARGE_OFFSET = 21001100;
+        */
 
         private uint globalTextureIndex = 0;
 
@@ -356,28 +360,17 @@ namespace MegaMixThumbnailManager.Backend
                 FileName = BIN_NAME
             };
 
-            uint id = DATABASE_ID_OFFSET;
-
             ushort textureIndex = 0;
 
             foreach (Texture texture in spriteSet.TextureSet.Textures)
             {
                 SpriteTextureInfo textureInfo = new SpriteTextureInfo
                 {
-                    Id = id,
                     Name = $"SPRTEX_SEL_PVTMB_{texture.Name}",
+                    Id = MurmurHash.Calculate(Name),
                     Index = textureIndex++
                 };
                 spriteSetInfo.Textures.Add(textureInfo);
-
-                if (id == DATABASE_ID_MAX_SAFE_OFFSET)
-                {
-                    id = DATABASE_ID_LARGE_OFFSET;
-                }
-                else
-                {
-                    id++;
-                }
             }
 
             ushort spriteIndex = 0;
@@ -386,20 +379,11 @@ namespace MegaMixThumbnailManager.Backend
             {
                 SpriteInfo spriteInfo = new SpriteInfo
                 {
-                    Id = id,
                     Name = $"{SPRITE_DATABASE_NAME}_{sprite.Name}",
+                    Id = MurmurHash.Calculate(Name),
                     Index = spriteIndex++
                 };
-
                 spriteSetInfo.Sprites.Add(spriteInfo);
-
-                if (id == DATABASE_ID_MAX_SAFE_OFFSET)
-                {
-                    id = DATABASE_ID_LARGE_OFFSET;
-                } else
-                {
-                    id++;
-                }
             }
 
             database.SpriteSets.Add(spriteSetInfo);
