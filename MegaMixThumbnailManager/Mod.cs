@@ -54,5 +54,9 @@ namespace MegaMixThumbnailManager
         {
             Logger.Log("Mega Mix Thumbnail Manager disposed successfully.");
         }
+        //TODO: Add Eden OldMan.dll file Check to get Eden Thumb file Path
+        private void EdenCoreCheck(string[] moddir)
+        {
+        }
     }
 }
