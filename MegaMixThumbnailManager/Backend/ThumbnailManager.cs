@@ -149,23 +149,33 @@ namespace MegaMixThumbnailManager.Backend
             {
                 if (sprite.TextureIndex != textureIndex)
                 {
-                    // Sprite doesn't use this texture.
+                    //Sprite  doesn't use this texture.
                     continue;
                 }
 
                 if (IsSpriteProcessed(sprite.Name))
                 {
-                    // We've already dealt with this ID, just skip it.
+                    //It's need since we need check if Sprite doesn't really use in the game.
+                    pvIDs.Remove(sprite.Name);
                     continue;
                 }
-                //idk why it's work
-                //Drop ID and check if ID is exits in pvIDs
-                if (pvIDs.Remove(sprite.Name))
+                
+                if (!pvIDs.Contains(sprite.Name))
                 {
-                    sprite.TextureIndex = globalTextureIndex;
-                    globalSprites.Add(sprite);
-                    modified = true;
+                    //Sprite doesn't really use in the game.
+                    continue;
                 }
+
+        		pvIDs.Remove(sprite.Name);
+                sprite.TextureIndex = globalTextureIndex;
+                globalSprites.Add(sprite);
+
+                modified = true;
+
+        		if (this.IsSpriteProcessed(sprite.Name))
+        		{
+        			pvIDs.Remove(sprite.Name);
+        		}
             }
 
             return modified;
